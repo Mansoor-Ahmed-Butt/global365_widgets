@@ -163,12 +163,18 @@ class GTextFieldForSingleLine extends StatelessWidget {
           ),
         if (paddingBelowHeading != null) SizedBox(height: paddingBelowHeading),
         Container(
-          decoration: BoxDecoration(
-            color: isRed ? Colors.red : (isEnabled ? containerColor : lightBackgroundColor),
-            borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
-          ),
+          decoration: isFieldForTable
+              ? BoxDecoration(
+                  color: isRed ? Colors.red : (isEnabled ? containerColor : lightBackgroundColor),
+                  borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
+                  border: Border.all(width: isFieldForTable ? 0.5 : 1, color: isInValid ? Colors.red : borderColor),
+                )
+              : null,
           width: containerWidth,
-          constraints: BoxConstraints(minHeight: isCustomHeight ? (containerHeight ?? Branding.tFHeight) : Branding.tFHeight),
+          height: (!isFieldForTable ? (isCustomHeight ? containerHeight : Branding.tFHeight) : null),
+          constraints: (isFieldForTable
+              ? BoxConstraints(minHeight: isCustomHeight ? (containerHeight ?? Branding.tFHeight) : Branding.tFHeight)
+              : null),
           child: Material(
             color: Colors.transparent,
             child: TextFormField(
@@ -207,44 +213,51 @@ class GTextFieldForSingleLine extends StatelessWidget {
                   ? const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: bodyTextDark, decorationThickness: 1.5)
                   : GTextFiledTheme.textStyle(fontSizeForAll).copyWith(color: textFieldColor),
               maxLines: maxLine,
-              decoration:
-                  GTextFiledTheme.inputDecoration(
-                    fontSizeForAll: fontSizeForAll,
-                    isFieldForTable: isFieldForTable,
-                    isZeroPadding: isZeroPadding,
-                    // isExtraHeightField: isExtraHeightField,
-                    hintText: hintText ?? "",
-                    suffixIcon: suffixIcon,
-                    // hintTextDirection
-                  ).copyWith(
-                    filled: true,
-                    fillColor: isRed ? Colors.red : (isEnabled ? containerColor : lightBackgroundColor),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
-                      borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: isInValid ? Colors.red : borderColor),
+              decoration: isFieldForTable
+                  ? GTextFiledTheme.inputDecoration(
+                      fontSizeForAll: fontSizeForAll,
+                      isFieldForTable: isFieldForTable,
+                      isZeroPadding: isZeroPadding,
+                      // isExtraHeightField: isExtraHeightField,
+                      hintText: hintText ?? "",
+                      suffixIcon: suffixIcon,
+                      // hintTextDirection
+                    )
+                  : GTextFiledTheme.inputDecoration(
+                      fontSizeForAll: fontSizeForAll,
+                      isFieldForTable: isFieldForTable,
+                      isZeroPadding: isZeroPadding,
+                      hintText: hintText ?? "",
+                      suffixIcon: suffixIcon,
+                    ).copyWith(
+                      filled: true,
+                      fillColor: isRed ? Colors.red : (isEnabled ? containerColor : lightBackgroundColor),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
+                        borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: isInValid ? Colors.red : borderColor),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
+                        borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: isInValid ? Colors.red : borderColor),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
+                        borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: isInValid ? Colors.red : borderColor),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
+                        borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: Colors.red),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
+                        borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: Colors.red),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
+                        borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: borderColor),
+                      ),
+                      errorStyle: const TextStyle(color: Colors.red, fontSize: 11, fontWeight: FontWeight.w400),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
-                      borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: isInValid ? Colors.red : borderColor),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
-                      borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: isInValid ? Colors.red : borderColor),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
-                      borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: Colors.red),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
-                      borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: Colors.red),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
-                      borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: borderColor),
-                    ),
-                    errorStyle: const TextStyle(color: Colors.red, fontSize: 11, fontWeight: FontWeight.w400),
-                  ),
               obscureText: isPassword ? true : false,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: validator as String? Function(String?)?,
