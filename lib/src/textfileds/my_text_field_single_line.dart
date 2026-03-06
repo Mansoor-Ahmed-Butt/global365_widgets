@@ -172,11 +172,13 @@ class GTextFieldForSingleLine extends StatelessWidget {
               : null,
           width: containerWidth,
           height: (!isFieldForTable ? (isCustomHeight ? containerHeight : Branding.tFHeight) : null),
-          constraints: (isFieldForTable
-              ? BoxConstraints(minHeight: isCustomHeight ? (containerHeight ?? Branding.tFHeight) : Branding.tFHeight)
-              : null),
-          child: Material(
-            color: Colors.transparent,
+          constraints: (isFieldForTable ? BoxConstraints(minHeight: isCustomHeight ? (containerHeight ?? Branding.tFHeight) : Branding.tFHeight) : null),
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
+                    hoverColor: Colors.white,
+                  ),
+            ),
             child: TextFormField(
               key: key1,
               controller: controller,
