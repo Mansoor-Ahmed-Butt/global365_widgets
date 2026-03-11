@@ -113,6 +113,7 @@ class GTextFieldForSingleLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       // mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -171,14 +172,12 @@ class GTextFieldForSingleLine extends StatelessWidget {
                 )
               : null,
           width: containerWidth,
-          height: (!isFieldForTable ? (isCustomHeight ? containerHeight : Branding.tFHeight) : null),
-          constraints: (isFieldForTable ? BoxConstraints(minHeight: isCustomHeight ? (containerHeight ?? Branding.tFHeight) : Branding.tFHeight) : null),
+          //height: (!isFieldForTable ? (isCustomHeight ? containerHeight : Branding.tFHeight) : null),
+          constraints: (isFieldForTable
+              ? BoxConstraints(minHeight: isCustomHeight ? (containerHeight ?? Branding.tFHeight) : Branding.tFHeight)
+              : null),
           child: Theme(
-            data: Theme.of(context).copyWith(
-              inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
-                    hoverColor: Colors.white,
-                  ),
-            ),
+            data: Theme.of(context).copyWith(inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(hoverColor: Colors.white)),
             child: TextFormField(
               key: key1,
               controller: controller,
@@ -234,6 +233,8 @@ class GTextFieldForSingleLine extends StatelessWidget {
                     ).copyWith(
                       filled: true,
                       fillColor: isRed ? Colors.red : (isEnabled ? containerColor : lightBackgroundColor),
+                      contentPadding: const EdgeInsets.only(left: 0, right: 8, top: 9, bottom: 9),
+                      errorStyle: const TextStyle(color: Colors.red, fontSize: 11, fontWeight: FontWeight.w400),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
                         borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: isInValid ? Colors.red : borderColor),
@@ -258,7 +259,6 @@ class GTextFieldForSingleLine extends StatelessWidget {
                         borderRadius: BorderRadius.circular(isFieldForTable ? 0 : Branding.tFborderR),
                         borderSide: BorderSide(width: isFieldForTable ? 0.5 : 1, color: borderColor),
                       ),
-                      errorStyle: const TextStyle(color: Colors.red, fontSize: 11, fontWeight: FontWeight.w400),
                     ),
               obscureText: isPassword ? true : false,
               autovalidateMode: AutovalidateMode.onUserInteraction,
